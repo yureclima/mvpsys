@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { LayoutDashboard, Users, MessageSquare, Bot, Contact } from "lucide-react";
 
-export function Sidebar() {
+interface SidebarProps {
+  onCloseMobile?: () => void;
+}
+
+export function Sidebar({ onCloseMobile }: SidebarProps) {
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/" },
     { name: "CRM Kanban", icon: Users, href: "/crm" },
@@ -22,6 +26,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onCloseMobile}
               className="flex items-center space-x-3 px-3 py-2 rounded-md transition-colors hover:bg-zinc-800 text-zinc-300 hover:text-white"
             >
               <Icon size={20} />
