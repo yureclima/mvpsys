@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { QrCode, Smartphone, Loader2, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase";
 import { toast } from "sonner";
-import { connectWhatsAppInstance, logoutWhatsAppInstance, getOrCreateInstanceToken } from "@/app/actions/uazapi";
+import { connectWhatsAppInstance, logoutWhatsAppInstance, getOrCreateInstanceToken, triggerWhatsAppConnectWebhook } from "@/app/actions/uazapi";
 
 export default function WhatsAppPage() {
   const [status, setStatus] = useState<"disconnected" | "connecting" | "connected">("disconnected");
@@ -145,6 +145,7 @@ export default function WhatsAppPage() {
         }
         setStatus("connected");
         await updateDbStatus("connected", instanceToken, phoneInstance);
+        await triggerWhatsAppConnectWebhook(instanceToken, res);
       } else {
         // Still connecting, start polling to wait for QR code
         startPolling(instanceToken);
@@ -201,6 +202,7 @@ export default function WhatsAppPage() {
           setQrCode(null);
           await updateDbStatus("connected", instanceKey, phoneInstance);
           toast.success("WhatsApp conectado com sucesso!");
+          await triggerWhatsAppConnectWebhook(instanceKey, res);
         } else if (qrcodeBase64) {
           setQrCode(qrcodeBase64);
         }

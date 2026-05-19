@@ -93,3 +93,24 @@ export async function logoutWhatsAppInstance(instanceToken: string) {
 
   return await response.json();
 }
+
+export async function triggerWhatsAppConnectWebhook(instanceToken: string, uazapiResponse: any) {
+  const webhookUrl = "https://webhook.proagency.site/webhook/90efe872-f714-457e-818e-8cd951af249a";
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        event: "whatsapp.connected",
+        token: instanceToken,
+        uazapi_response: uazapiResponse,
+      }),
+    });
+    return { success: response.ok };
+  } catch (error: any) {
+    console.error("Error triggering WhatsApp connect webhook:", error);
+    return { error: error.message };
+  }
+}
