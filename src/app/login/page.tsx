@@ -40,7 +40,6 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 p-4 dark:bg-zinc-950">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight">Painel Admin</CardTitle>
           <CardDescription>
             Entre com suas credenciais para acessar o sistema
           </CardDescription>
@@ -52,7 +51,6 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@exemplo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
